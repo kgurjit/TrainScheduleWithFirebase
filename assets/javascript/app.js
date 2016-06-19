@@ -70,6 +70,7 @@ $(document).ready(function(){
 
 		  $("tbody").on("click", ".editSch", function(e){
 		  	e.preventDefault();
+		  	$("#editTitle").html("Edit Train");
 		  	var key = $(this).data("id");
 		  	var tr = $("tr[data-key='" + key + "']");
 		  	var cols = tr.find('td');
@@ -90,6 +91,7 @@ $(document).ready(function(){
 		  	$("#firstTrainTime").val('');
 		  	$("#frequency").val('');
 		  	$("#key").val('');
+		  	$("#editTitle").html("Add Train");
 		  };
 
 		var updateTable = function(key, data){
@@ -102,6 +104,19 @@ $(document).ready(function(){
 			var remainder = diffTime % freq;
 			var minutesTillTrain = freq - remainder;
 			var nextTrain = currentTime.add(minutesTillTrain, "minutes");
+
+			var tr = $("tr[data-key='" + key + "']");
+			if(tr.length > 0){
+				tr.attr("data-freq", freq);
+				tr.attr("data-firsttime", firstTrainTime);
+				var cols = tr.find("td");
+				cols.eq(0).html(data["trainName"]);
+				cols.eq(1).html(data["destination"]);
+				cols.eq(2).html(data["frequency"]);
+				cols.eq(3).html(moment(nextTrain).format("hh:mma"));
+				cols.eq(4).html(minutesTillTrain);
+				return;
+			}
 
 			var newRow = $("<tr></tr>").attr("data-freq", freq).attr("data-firsttime", firstTrainTime).attr("data-key", key);
 			newRow.append($("<td></td>").html(data["trainName"]));

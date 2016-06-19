@@ -6,3 +6,14 @@
 .row-action {
 	margin-right: 20px;
 }
+
+.panel-link {
+	color: #fff;
+	width: 100%;
+	text-align: right;
+	display: inline-block;
+}
+
+.panel-link:hover {
+	color: #fff;
+}
